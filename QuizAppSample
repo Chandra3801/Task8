@@ -1,0 +1,66 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+// This class keep question, choices, answer
+class Question {
+    String text;       // Question text
+    String[] choice;   // Choices for answer
+    int rightAns;      // Correct answer number (1-4)
+
+    public Question(String text, String[] choice, int rightAns) {
+        this.text = text;
+        this.choice = choice;
+        this.rightAns = rightAns;
+    }
+
+    // Show question and choices
+    public void show() {
+        System.out.println(text);
+        for (int i = 0; i < choice.length; i++) {
+            System.out.println((i + 1) + ". " + choice[i]);
+        }
+    }
+
+    // Check if user answer is correct
+    public boolean check(int ans) {
+        return ans == rightAns;
+    }
+}
+
+public class QuizAppSimple {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Make list to keep all questions
+        List<Question> qList = new ArrayList<>();
+        qList.add(new Question("1. Capital of France?",
+                new String[]{"Berlin", "Paris", "Rome", "Madrid"}, 2));
+        qList.add(new Question("2. Planet called Red Planet?",
+                new String[]{"Earth", "Saturn", "Mars", "Venus"}, 3));
+        qList.add(new Question("3. Biggest animal?",
+                new String[]{"Blue Whale", "Elephant", "Giraffe", "Shark"}, 1));
+
+        int score = 0;
+
+        // Ask each question
+        for (Question q : qList) {
+            q.show();
+            System.out.print("Your answer (1-4): ");
+            int ans = sc.nextInt();
+
+            if (q.check(ans)) {
+                System.out.println("✅ Right answer!\n");
+                score++;
+            } else {
+                System.out.println("❌ Wrong! Right answer is option " + q.rightAns + ".\n");
+            }
+        }
+
+        // Show final score
+        System.out.println("Quiz Done!");
+        System.out.println("Your score: " + score + " / " + qList.size());
+
+        sc.close();
+    }
+}
